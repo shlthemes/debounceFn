@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body style="background: yellow; height: 10000px;">
+
+
+    <script>
+        /*
+            2 tai to same kaj kore vaiya,,,even 2nd debounce fn ta ro sohoj,,,tahole 1st ar tar sathe 2nd tar diffecence ki???
+        */
+
+        // From wes bos JS 30 challenge
+        function debounce1(func, wait = 20, immediate = true) {
+            var timeout;
+            return function () {
+                var context = this,
+                    args = arguments;
+
+                var later = function () {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        };
+
+        // Own debounce Fn from youtube
+        const debounce2 = (fn, delay = 20) => {
+            let timeoutID;
+            return function () {
+
+                if (timeoutID) {
+                    clearTimeout(timeoutID);
+                }
+
+                timeoutID = setTimeout(() => {
+                    fn();
+                }, delay);
+            }
+        };
+
+        const logger = () => {
+            console.log('clicked!')
+        };
+
+        window.addEventListener('scroll', debounce2(logger));
+    </script>
+
+</body>
+
+</html>
